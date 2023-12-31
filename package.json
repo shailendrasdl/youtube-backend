@@ -1,0 +1,17 @@
+{
+  "name": "youtubebackend",
+  "version": "1.0.0",
+  "description": "youtube backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "nodeJs",
+    "expressJs",
+    "mongodb"
+  ],
+  "author": "shailendra sen",
+  "license": "ISC"
+}
