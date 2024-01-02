@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 
 const registerUser = asyncHandler(async (req, res) => {
   console.log(" call registerUser controller");
-  return res.status(200).json({ message: "OK" });
+  return res.status(200).json({ message: "Success" });
 });
 
 const loginUser = asyncHandler(async (req, res) => {
