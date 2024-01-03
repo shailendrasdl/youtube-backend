@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import cookieParser from "cookie-parser";
+
+import userRouter from "./routes/user.routes.js";
 
 const app = express();
 
@@ -11,12 +14,11 @@ app.use(
   })
 );
 
-app.use(express.json({ limit: "16kb" }));
-app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(express.json());
 app.use(cookieParser());
-
-import userRouter from "./routes/user.routes.js";
+app.use(helmet());
 
 app.use("/api/v1/users", userRouter);
 
