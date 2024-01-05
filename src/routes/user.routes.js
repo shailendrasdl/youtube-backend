@@ -1,8 +1,14 @@
 import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
-import { loginUser, registerUser } from "../controllers/user.controller.js";
+import {
+  loginUser,
+  registerUser,
+  webhookUrl,
+} from "../controllers/user.controller.js";
 
 const router = Router();
+
+router.route("/webhook").post(webhookUrl);
 
 router.route("/register").post(
   upload.fields([
@@ -18,6 +24,7 @@ router.route("/register").post(
   registerUser
 );
 router.route("/login").post(loginUser);
+
 //router.post("/register", registerUser);
 
 export default router;
