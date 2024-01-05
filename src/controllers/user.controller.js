@@ -138,7 +138,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refereshAccessToken = asyncHandler(async (req, res) => {
-  console.log("-- call controller --");
   const incomingRefreshToken =
     req.cookies.refreshToken || req.body.refreshToken;
   if (!incomingRefreshToken) {
@@ -160,7 +159,7 @@ const refereshAccessToken = asyncHandler(async (req, res) => {
       httpOnly: true,
       secure: true,
     };
-    // const newRefreshToken = await generateAccessAndRefereshTokens(user._id);
+
     const { accessToken, newRefreshToken } =
       await generateAccessAndRefereshTokens(user._id);
     return res
