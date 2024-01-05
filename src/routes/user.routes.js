@@ -2,6 +2,7 @@ import { Router } from "express";
 import { upload } from "../middlewares/multer.middleware.js";
 import { webhookUrl } from "../controllers/webhook.controller.js";
 import {
+  changeCurrentPassword,
   loginUser,
   logoutUser,
   refereshAccessToken,
@@ -31,5 +32,6 @@ router.route("/refresh-token").post(refereshAccessToken);
 
 //secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
+router.route("/change-password").post(verifyJWT, changeCurrentPassword);
 
 export default router;
