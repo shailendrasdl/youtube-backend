@@ -3,6 +3,7 @@ import { upload } from "../middlewares/multer.middleware.js";
 import { webhookUrl } from "../controllers/webhook.controller.js";
 import {
   changeCurrentPassword,
+  forgotPassword,
   getCurrentUser,
   loginUser,
   logoutUser,
@@ -36,6 +37,7 @@ router.route("/refresh-token").post(refereshAccessToken);
 
 //secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
+router.route("/forgot-password").patch(forgotPassword);
 router.route("/change-password").post(verifyJWT, changeCurrentPassword);
 router.route("/current-user").get(verifyJWT, getCurrentUser);
 router.route("/update-account").patch(verifyJWT, updateAccountDetails);
