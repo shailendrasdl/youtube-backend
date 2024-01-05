@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const webhookUrl = async (req, res, next) => {
-  console.log("-- call webhookUrl api --");
   try {
     const payload = {
       code: "2",
