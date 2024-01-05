@@ -4,6 +4,7 @@ import { webhookUrl } from "../controllers/webhook.controller.js";
 import {
   loginUser,
   logoutUser,
+  refereshAccessToken,
   registerUser,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -26,6 +27,7 @@ router.route("/register").post(
   registerUser
 );
 router.route("/login").post(loginUser);
+router.route("/refresh-token").post(refereshAccessToken);
 //secured routes
 router.route("/logout").post(verifyJWT, logoutUser);
 
