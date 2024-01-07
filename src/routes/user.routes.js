@@ -5,6 +5,7 @@ import {
   changeCurrentPassword,
   forgotPassword,
   getCurrentUser,
+  getUserChannelProfile,
   loginUser,
   logoutUser,
   refereshAccessToken,
@@ -47,5 +48,7 @@ router
 router
   .route("/cover-image")
   .patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage);
+  router.route("/getUserChannelProfile").get(verifyJWT, getUserChannelProfile)
+
 
 export default router;
