@@ -6,6 +6,7 @@ import {
   forgotPassword,
   getCurrentUser,
   getUserChannelProfile,
+  getWatchHistory,
   loginUser,
   logoutUser,
   refereshAccessToken,
@@ -55,5 +56,6 @@ router
   .get(verifyJWT, getUserChannelProfile);
 */
 router.route("/channel-profile").get(verifyJWT, getUserChannelProfile);
+router.route("/watchHistory").get(verifyJWT, getWatchHistory);
 
 export default router;
