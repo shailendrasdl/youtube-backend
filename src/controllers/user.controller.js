@@ -275,8 +275,13 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, user, "cover image updated successfully"));
 });
 
+const subscribeChannel = asyncHandler(async (req, res) => {});
+
 const getUserChannelProfile = asyncHandler(async (req, res) => {
-  const { username, id } = req.params;
+  console.log(" --call API --");
+  //const { username } = req.params;
+  const { username } = req.body;
+
   if (!username?.trim()) {
     throw new ApiError(400, "username is missing");
   }
@@ -332,10 +337,11 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
       },
     },
   ]);
-  console.log("channel :", channel);
-  if (!channel || channel?.length) {
+
+  if (!channel?.length) {
     throw new ApiError(404, "channel does not exists");
   }
+
   return res
     .status(200)
     .json(
@@ -349,6 +355,7 @@ export {
   registerUser,
   getCurrentUser,
   forgotPassword,
+  subscribeChannel,
   updateUserAvatar,
   refereshAccessToken,
   updateAccountDetails,
