@@ -1,10 +1,8 @@
 import { Router } from "express";
-//import { getAllVideos, publishVideo } from "../controllers/video.controller";
+import { getAllVideos } from "../controllers/video.controller.js";
 
 const router = Router();
 
-
-//router.route("/getAllVideos").get(getAllVideos);
-//router.route("/publishVideo").post
+router.route("/videoList").get(getAllVideos);
 
 export default router;
