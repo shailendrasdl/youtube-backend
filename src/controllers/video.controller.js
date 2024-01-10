@@ -5,22 +5,19 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const getAllVideos = asyncHandler(async (req, res) => {
+  //const supportChat_list = await Support_chat.find({"ticket": req.params.postId}).sort({"updated_at": 1});
+  const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
   console.log("-- call api --");
-  const video = await Video.find();
+  const video = await Video.find().sort({ updatedAt: 1 }).limit(10);
   console.log("video :", video);
   return res.status(200).json(new ApiResponse(200, video, "All Videos"));
 });
 
 const publishVideo = asyncHandler(async (req, res) => {
   const { title, description, duration } = req.body;
-  console.log("-- call api --");
-  // if (
-  //   [title, description, duration].some(
-  //     (field) => field?.trim() === ""
-  //   )
-  // ) {
-  //   throw new ApiError(400, "All fields are required");
-  // }
+  if ([title, description, duration].some((field) => field?.trim() === "")) {
+    throw new ApiError(400, "All fields are required");
+  }
   console.log("videoFile: ", req.files?.videoFile[0]);
   const videoFileLocalPath = req.files?.videoFile[0]?.path;
   if (!videoFileLocalPath) {
@@ -56,4 +53,23 @@ const publishVideo = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createVideo, "Video Publish Successfully"));
 });
 
-export { getAllVideos, publishVideo };
+const togglePublishStatus = asyncHandler(async (req, res) => {
+  const { _id } = req.params;
+  const video = await Video.findOne(_id);
+
+  let newPublished;
+  if (video.isPublished === true) {
+    newPublished = false;
+  } else {
+    newPublished = true;
+  }
+  video.isPublished = newPublished;
+  await video.save({ validateBeforeSave: false });
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(200, newPublished, "isPublished update Successfully")
+    );
+});
+
+export { getAllVideos, publishVideo, togglePublishStatus };
