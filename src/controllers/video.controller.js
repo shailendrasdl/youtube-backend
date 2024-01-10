@@ -9,7 +9,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
   const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query;
   console.log("-- call api --");
   const video = await Video.find().sort({ updatedAt: 1 }).limit(10);
-  console.log("video :", video);
+  //console.log("video :", video);
   return res.status(200).json(new ApiResponse(200, video, "All Videos"));
 });
 
@@ -53,6 +53,14 @@ const publishVideo = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createVideo, "Video Publish Successfully"));
 });
 
+const deleteVideo = asyncHandler(async (req, res) => {
+  const { videoId } = req.params;
+  const video = await Video.findByIdAndDelete({ _id: videoId });
+  return res
+    .status(201)
+    .json(new ApiResponse(200, {}, "Video Delete Successfully"));
+});
+
 const togglePublishStatus = asyncHandler(async (req, res) => {
   const { _id } = req.params;
   const video = await Video.findOne(_id);
@@ -72,4 +80,4 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
     );
 });
 
-export { getAllVideos, publishVideo, togglePublishStatus };
+export { getAllVideos, publishVideo, deleteVideo, togglePublishStatus };
