@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   deleteVideo,
   getAllVideos,
+  getVideoById,
   publishVideo,
   togglePublishStatus,
 } from "../controllers/video.controller.js";
@@ -26,6 +27,7 @@ router.route("/publishVideo").post(
   ]),
   publishVideo
 );
+router.route("/getVideoById/:videoId").get(verifyJWT, getVideoById);
 
 router.route("/deleteVideo/:videoId").delete(verifyJWT, deleteVideo);
 router.route("/toggle/publish/:videoId").patch(verifyJWT, togglePublishStatus);

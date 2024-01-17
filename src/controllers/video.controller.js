@@ -18,7 +18,7 @@ const publishVideo = asyncHandler(async (req, res) => {
   if ([title, description, duration].some((field) => field?.trim() === "")) {
     throw new ApiError(400, "All fields are required");
   }
-  console.log("videoFile: ", req.files?.videoFile[0]);
+
   const videoFileLocalPath = req.files?.videoFile[0]?.path;
   if (!videoFileLocalPath) {
     throw new ApiError(400, "videoFile File is required");
@@ -28,6 +28,7 @@ const publishVideo = asyncHandler(async (req, res) => {
     throw new ApiError(400, "thumbnail File is required");
   }
   const videoFile = await uploadOnCloudinary(videoFileLocalPath);
+  console.log("videoFile: ", videoFile);
   const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
   if (!videoFile) {
     throw new ApiError(400, "Avatar File is required");
@@ -40,7 +41,7 @@ const publishVideo = asyncHandler(async (req, res) => {
     description,
     videoFile: videoFile.url,
     thumbnail: thumbnail.url,
-    size: videoFile.size,
+    size: videoFile.bytes,
     duration,
     isPublished: true,
     owner: req.user._id,
@@ -51,6 +52,18 @@ const publishVideo = asyncHandler(async (req, res) => {
   return res
     .status(201)
     .json(new ApiResponse(200, createVideo, "Video Publish Successfully"));
+});
+
+const getVideoById = asyncHandler(async (req, res) => {
+  const { videoId } = req.params;
+  const video = await Video.findById(videoId);
+  console.log("video :", video);
+  return res.status(201).json(new ApiResponse(200, video, " Successfully "));
+});
+
+const updateVideo = asyncHandler(async (req, res) => {
+  const { videoId } = req.params;
+  //TODO: update video details like title, description, thumbnail
 });
 
 const deleteVideo = asyncHandler(async (req, res) => {
@@ -80,4 +93,11 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
     );
 });
 
-export { getAllVideos, publishVideo, deleteVideo, togglePublishStatus };
+export {
+  getAllVideos,
+  publishVideo,
+  getVideoById,
+  deleteVideo,
+  updateVideo,
+  togglePublishStatus,
+};
