@@ -28,7 +28,6 @@ const publishVideo = asyncHandler(async (req, res) => {
     throw new ApiError(400, "thumbnail File is required");
   }
   const videoFile = await uploadOnCloudinary(videoFileLocalPath);
-  console.log("videoFile: ", videoFile);
   const thumbnail = await uploadOnCloudinary(thumbnailLocalPath);
   if (!videoFile) {
     throw new ApiError(400, "Avatar File is required");

@@ -13,7 +13,7 @@ const router = Router();
 router.use(verifyJWT);
 
 router.route("/addComment").post(addComment);
-router.route("/deleteComment").delete(deleteComment);
+router.route("/deleteComment/:commentId").delete(deleteComment);
 router.route("/getVideoComments/:videoId").get(getVideoComments);
 router.route("/updateComment/:commentId").patch(updateComment);
 
