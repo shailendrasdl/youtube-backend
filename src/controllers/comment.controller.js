@@ -79,18 +79,26 @@ const getVideoComments = asyncHandler(async (req, res) => {
 });
 
 const addComment = asyncHandler(async (req, res) => {
-  const { content, video, owner } = req.body;
-  const existedOwner = await User.findById(owner);
-  if (!existedOwner) {
-    throw new ApiError(409, "owner not exists");
+  const { videoId } = req.params;
+  const { content } = req.body;
+  if (!content) {
+    throw new ApiError(400, "Content is required");
   }
-  const comment = await Comment.create({ content, video, owner });
+  const video = await Video.findById(videoId);
+  if (!video) {
+    throw new ApiError(404, "Video not found");
+  }
+  const comment = await Comment.create({
+    content,
+    video: videoId,
+    owner: req.user?._id,
+  });
   if (!comment) {
-    throw new ApiError(500, "Something went wrong");
+    throw new ApiError(500, "Failed to add comment please try again");
   }
   return res
     .status(201)
-    .json(new ApiResponse(200, comment, "Comment Added Successfully"));
+    .json(new ApiResponse(200, comment, "Comment added successfully"));
 });
 
 const updateComment = asyncHandler(async (req, res) => {
