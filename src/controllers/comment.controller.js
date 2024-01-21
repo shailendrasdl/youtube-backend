@@ -6,11 +6,12 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 const getVideoComments = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
-  const { page = 1, limit = 10 } = req.query;
-  const comment = Comment.find({ video: videoId })
-    .projection({})
+  const { page = 1 } = req.query;
+  const comment = await Comment.find({ video: videoId })
+    .select("-owner -video -createdAt -updatedAt -_id -__v")
     .sort({ _id: -1 })
     .limit(10);
+
   return res.status(200).json(new ApiResponse(200, comment, "All Comments"));
 });
 
@@ -35,7 +36,7 @@ const updateComment = asyncHandler(async (req, res) => {
     commentId,
     {
       $set: {
-        comment: req.body.comment,
+        content: req.body.content,
       },
     },
     { new: true }
