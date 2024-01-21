@@ -103,26 +103,53 @@ const addComment = asyncHandler(async (req, res) => {
 
 const updateComment = asyncHandler(async (req, res) => {
   const { commentId } = req.params;
-  const comment = await Comment.findByIdAndUpdate(
-    commentId,
+  const { content } = req.body;
+  if (!content) {
+    throw new ApiError(400, "content is required");
+  }
+  const comment = await Comment.findById(commentId);
+  if (!comment) {
+    throw new ApiError(404, "Comment not found");
+  }
+  console.log("-> comment :", comment);
+  if (comment.owner.toString() !== req.user?._id.toString()) {
+    throw new ApiError(400, "only comment owner can edit their comment");
+  }
+  const updatedComment = await Comment.findByIdAndUpdate(
+    comment?._id,
     {
       $set: {
-        content: req.body.content,
+        content,
       },
     },
     { new: true }
-  ).select("-owner -video");
+  );
+  if (!updatedComment) {
+    throw new ApiError(500, "Failed to edit comment please try again");
+  }
   return res
     .status(200)
-    .json(new ApiResponse(200, comment, "Comment updated successfully"));
+    .json(new ApiResponse(200, updatedComment, "Comment edited successfully"));
 });
 
 const deleteComment = asyncHandler(async (req, res) => {
   const { commentId } = req.params;
-  const comment = await Comment.findByIdAndDelete({ _id: commentId });
+
+  const comment = await Comment.findById(commentId);
+
+  if (!comment) {
+    throw new ApiError(404, "Comment not found");
+  }
+
+  if (comment?.owner.toString() !== req.user?._id.toString()) {
+    throw new ApiError(400, "only comment owner can delete their comment");
+  }
+
+  await Comment.findByIdAndDelete(commentId);
+
   return res
-    .status(201)
-    .json(new ApiResponse(200, {}, "Comment Delete Successfully"));
+    .status(200)
+    .json(new ApiResponse(200, {}, "Comment deleted successfully"));
 });
 
 export { getVideoComments, addComment, updateComment, deleteComment };
