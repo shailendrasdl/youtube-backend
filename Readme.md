@@ -10,7 +10,17 @@
   - Cloudinary (must have an account)  
 
 # Features
- # User Management:
-    Registration, login, logout, password reset
-    Profile management (avatar, cover image, details)
-    Watch history tracking
+  User Management:
+    - Registration, login, logout, password reset
+    - Profile management (avatar, cover image, details)
+    - Watch history tracking
+
+  Video Management:
+    - Video upload and publishing
+    - Video search, sorting, and pagination
+    - Video editing and deletion
+    - Visibility control (publish/unpublish) 
+  Tweet Management:
+    -   Tweet creation and publishing
+    -   Viewing user tweets
+    -   Updating and deleting tweets   
