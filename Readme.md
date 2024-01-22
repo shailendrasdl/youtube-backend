@@ -21,7 +21,7 @@
 
 # Features
   User Management:
-    - Registration, login, logout, password reset
+    - Registration, login, logout, reset_password, change_Password
     - Profile management (avatar, cover image, details)
     - Watch history tracking
 
@@ -34,4 +34,28 @@
   Tweet Management:
     -   Tweet creation and publishing
     -   Viewing user tweets
-    -   Updating and deleting tweets   
+    -   Updating and deleting tweets  
+
+  Subscription Management:
+    - Subscribing to channels
+    - Viewing subscriber and subscribed channel lists  
+
+  Playlist Management:
+  -  Creating, updating, and deleting playlists
+  -  Adding and removing videos from playlists
+  -  Viewing user playlists 
+
+  Like Management:
+    - Liking and unliking videos, comments, and tweets
+    - Viewing liked videos 
+
+  Like Management:
+  - Liking and unliking videos, comments, and tweets
+  - Viewing liked videos 
+
+  Dashboard:
+  - Viewing channel statistics (views, subscribers, videos, likes)
+  - Accessing uploaded videos
+
+Health Check:
+  - Endpoint to verify the backend's health 
