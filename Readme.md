@@ -9,6 +9,16 @@
   - MongoDB
   - Cloudinary (must have an account)  
 
+# Installation and Setup
+  1. Clone the repository:
+    - https://github.com/shailendrasdl/youtube-backend.git
+
+  2. Install dependencies:
+   - npm install  
+
+  3. Start the server: 
+    -  npm run dev
+
 # Features
   User Management:
     - Registration, login, logout, password reset
@@ -20,7 +30,7 @@
     - Video search, sorting, and pagination
     - Video editing and deletion
     - Visibility control (publish/unpublish) 
-    
+
   Tweet Management:
     -   Tweet creation and publishing
     -   Viewing user tweets
