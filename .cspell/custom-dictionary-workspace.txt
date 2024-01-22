@@ -1,3 +1,7 @@
 # Custom Dictionary Words
+allmost
+documentaion
 healthcheck
+unliking
+unpublish
 webhookdata

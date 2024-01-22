@@ -1,3 +1,4 @@
+import mongoose, { isValidObjectId } from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Video } from "../models/video.model.js";
@@ -74,9 +75,45 @@ const deleteVideo = asyncHandler(async (req, res) => {
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
-  const { _id } = req.params;
-  const video = await Video.findOne(_id);
+  const { videoId } = req.params;
+  if (!isValidObjectId(videoId)) {
+    throw new ApiError(400, "Invalid videoId");
+  }
+  const video = await Video.findOne(videoId);
+  if (!video) {
+    throw new ApiError(404, "Video not found");
+  }
+  if (video?.owner.toString() !== req.user?._id.toString()) {
+    throw new ApiError(
+      400,
+      "You can't toogle publish status as you are not the owner"
+    );
+  }
+  const toggledVideoPublish = await Video.findByIdAndUpdate(
+    videoId,
+    {
+      $set: {
+        isPublished: !video?.isPublished,
+      },
+    },
+    { new: true }
+  );
 
+  if (!toggledVideoPublish) {
+    throw new ApiError(500, "Failed to toogle video publish status");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        { isPublished: toggledVideoPublish.isPublished },
+        "Video publish toggled successfully"
+      )
+    );
+
+  /*
   let newPublished;
   if (video.isPublished === true) {
     newPublished = false;
@@ -88,8 +125,9 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
   return res
     .status(201)
     .json(
-      new ApiResponse(200, newPublished, "isPublished update Successfully")
+      new ApiResponse(200, newPublished, "Video publish toggled successfully")
     );
+  */
 });
 
 export {
