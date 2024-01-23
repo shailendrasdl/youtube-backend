@@ -12,8 +12,8 @@ const router = Router();
 router.use(verifyJWT, upload.none());
 
 router.route("/").post(createTweet);
-router.route("/:tweetId").patch(updateTweet);
-router.route("/:tweetId").patch(deleteTweet);
+router.route("/updateTweet/:tweetId").patch(updateTweet);
+router.route("/deleteTweet/:tweetId").delete(deleteTweet);
 router.route("/user/:userId").get(getUserTweets);
 
 export default router;

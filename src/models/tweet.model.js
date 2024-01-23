@@ -4,9 +4,9 @@ const tweetSchema = new mongoose.Schema(
   {
     content: {
       type: String,
-      required: true,
+      required: [true, "content is required"],
     },
-    owner: { 
+    owner: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },

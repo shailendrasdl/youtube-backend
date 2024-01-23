@@ -26,11 +26,9 @@ const createTweet = asyncHandler(async (req, res) => {
 const updateTweet = asyncHandler(async (req, res) => {
   const { content } = req.body;
   const { tweetId } = req.params;
-
   if (!content) {
     throw new ApiError(400, "content is required");
   }
-
   if (!isValidObjectId(tweetId)) {
     throw new ApiError(400, "Invalid tweetId");
   }
@@ -50,11 +48,9 @@ const updateTweet = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-
   if (!newTweet) {
     throw new ApiError(500, "Failed to edit tweet please try again");
   }
-
   return res
     .status(200)
     .json(new ApiResponse(200, newTweet, "Tweet updated successfully"));
@@ -86,11 +82,9 @@ const deleteTweet = asyncHandler(async (req, res) => {
 
 const getUserTweets = asyncHandler(async (req, res) => {
   const { userId } = req.params;
-
   if (!isValidObjectId(userId)) {
     throw new ApiError(400, "Invalid userId");
   }
-
   const tweets = await Tweet.aggregate([
     {
       $match: {
@@ -147,7 +141,6 @@ const getUserTweets = asyncHandler(async (req, res) => {
       },
     },
   ]);
-
   return res
     .status(200)
     .json(new ApiResponse(200, tweets, "Tweets fetched successfully"));
