@@ -404,8 +404,28 @@ const getWatchHistory = asyncHandler(async (req, res) => {
       )
     );
 });
+const updateGender = asyncHandler(async (req, res) => {
+  const user = await (
+    await User.find()
+  ).forEach(async function (data) {
+    console.warn(data.username, "  --- ", data.gender);
+    if (data.gender === "male") {
+      console.warn("INSIDE IF");
+      await User.updateOne(
+        { gender: data.gender },
+        { $set: { gender: "female" } }
+      );
+    } else if (data.gender === "female") {
+      console.warn("INSIDE Else IF");
+      const updateUserGender = await User.updateOne({ gender: data.gender },
+        [{ $set: { gender: "male" } }],
+        { new: true }
+      );
+    }
+  });
+  return res.status(200).json(new ApiResponse(200, {}, "update successfully"));
+});
 
-// watch-video
 export {
   loginUser,
   logoutUser,
@@ -420,4 +440,5 @@ export {
   changeCurrentPassword,
   getUserChannelProfile,
   getWatchHistory,
+  updateGender,
 };

@@ -12,6 +12,7 @@ import {
   refereshAccessToken,
   registerUser,
   updateAccountDetails,
+  updateGender,
   updateUserAvatar,
   updateUserCoverImage,
 } from "../controllers/user.controller.js";
@@ -57,5 +58,6 @@ router
 */
 router.route("/channel-profile").get(verifyJWT, getUserChannelProfile);
 router.route("/history").get(verifyJWT, getWatchHistory);
+router.route('/updateGender').post(verifyJWT, updateGender)
 
 export default router;
