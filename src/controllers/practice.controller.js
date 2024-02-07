@@ -1,14 +1,13 @@
-//const fs = require("fs/promises");
-import axios from "axios";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-// import { ApiError } from "../utils/ApiError.js";
+import { user, post } from "../constants.js";
+import axios from "axios";
 
 const promisesAll = asyncHandler(async (req, res) => {
   try {
     const [usersResponse, postsResponse] = await Promise.all([
-      axios.get(`${process.env.baseURI}/users`),
-      axios.get(`${process.env.baseURI}/posts`),
+      axios.get(`${process.env.baseURI}/${user}`),
+      axios.get(`${process.env.baseURI}/${post}`),
     ]);
     let data = {
       user: usersResponse.data,
