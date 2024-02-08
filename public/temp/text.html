@@ -1,0 +1,20 @@
+<h1>Print Number 1 to 100 without Loop | JavaScript</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>javaScript</title>
+  </head>
+  <body>
+    <script>
+      function count(start, end) {
+        console.log("start :", start);
+        if (start < end) {
+          count(start + 1, end);
+        }
+      }
+      count(1, 100);
+    </script>
+  </body>
+</html>
