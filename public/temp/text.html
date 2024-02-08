@@ -8,13 +8,14 @@
   </head>
   <body>
     <script>
-      function count(start, end) {
+      function PrintNumbers(start, end) {
         console.log("start :", start);
         if (start < end) {
           count(start + 1, end);
         }
+        return start;
       }
-      count(1, 100);
+      PrintNumbers(1, 100);
     </script>
   </body>
 </html>
