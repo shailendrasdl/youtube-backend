@@ -4,7 +4,7 @@ import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 
 export const verifyJWT = asyncHandler(async (req, _, next) => {
-  console.log(" -- call  auth middleware --");
+  console.log(" -- user Authorization --");
   try {
     const token =
       req.cookies?.accessToken ||

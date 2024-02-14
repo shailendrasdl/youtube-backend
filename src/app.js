@@ -17,6 +17,7 @@ import subscriptionRouter from "./routes/subscription.routes.js";
 import dashboardRouter from "./routes/dashboard.routes.js";
 import practiceRouter from "./routes/practice.routes.js";
 import stripeRouter from "./routes/stripe.routes.js";
+import paymentRouter from "./routes/payment/payment.routes.js";
 
 const app = express();
 
@@ -39,7 +40,8 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/likes", likeRouter);
 app.use("/api/v1/tweets", tweetRouter);
 app.use("/api/v1/videos", videoRouter);
-app.use("/api/v1/payment", stripeRouter);
+app.use("/api/v1/payments", stripeRouter);
+app.use("/api/v1/payment", paymentRouter);
 app.use("/api/v1/comments", commentRouter);
 app.use("/api/v1/promises", practiceRouter);
 app.use("/api/v1/dashboard", dashboardRouter);

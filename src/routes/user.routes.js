@@ -58,6 +58,6 @@ router
 */
 router.route("/channel-profile").get(verifyJWT, getUserChannelProfile);
 router.route("/history").get(verifyJWT, getWatchHistory);
-router.route('/updateGender').post(verifyJWT, updateGender)
+router.route("/updateGender").post(verifyJWT, updateGender);
 
 export default router;
