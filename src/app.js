@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import logger from "morgan";
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -14,6 +16,7 @@ import healthcheckRouter from "./routes/healthcheck.routes.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
 import dashboardRouter from "./routes/dashboard.routes.js";
 import practiceRouter from "./routes/practice.routes.js";
+import stripeRouter from "./routes/stripe.routes.js";
 
 const app = express();
 
@@ -24,20 +27,10 @@ app.use(
   })
 );
 
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Swagger Express API",
-      version: "1.0.0",
-      description: "A simple Express API with Swagger documentation",
-    },
-  },
-  apis: ["./routes/*.js"], // Path to your API routes
-};
-
+app.use(bodyParser.json({ type: "application/json" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
@@ -46,6 +39,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/likes", likeRouter);
 app.use("/api/v1/tweets", tweetRouter);
 app.use("/api/v1/videos", videoRouter);
+app.use("/api/v1/payment", stripeRouter);
 app.use("/api/v1/comments", commentRouter);
 app.use("/api/v1/promises", practiceRouter);
 app.use("/api/v1/dashboard", dashboardRouter);
